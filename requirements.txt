@@ -1,5 +1,5 @@
 streamlit
-mecab-python3
-wordcloud
+gspread
+google-auth
 pandas
-ipadic
+plotly
