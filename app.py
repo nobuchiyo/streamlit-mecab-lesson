@@ -15,7 +15,7 @@ st.set_page_config(
 )
 
 # タイトルの設定
-st.title("テキスト可視化")
+st.title("テキスト可視化デプロイ版")
 
 # サイドバーにアップロードファイルのウィジェットを表示
 st.sidebar.markdown("# ファイルアップロード")
