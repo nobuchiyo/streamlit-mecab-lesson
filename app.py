@@ -10,14 +10,16 @@ SCOPE = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis
 SHEET_NAME = "勉強効率化システム_データ" # スプレッドシート名
 
 def get_gsheet_client():
-    # Secretsから認証情報を取得
-    creds_dict = st.secrets["gcp_service_account"]
+    # 1. st.secrets から値を「コピー」して、ふつうの辞書を作る
+    # .to_dict() を使うか dict() で囲むことで、書き換え可能なオブジェクトになります
+    creds_info = dict(st.secrets["gcp_service_account"])
     
-    # 【エラー対策】秘密鍵の改行文字(\\n)を実際の改行に変換
-    if "private_key" in creds_dict:
-        creds_dict["private_key"] = creds_dict["private_key"].replace("\\n", "\n")
+    # 2. コピーした辞書の方の改行文字を修正する
+    if "private_key" in creds_info:
+        creds_info["private_key"] = creds_info["private_key"].replace("\\n", "\n")
     
-    creds = Credentials.from_service_account_info(creds_dict, scopes=SCOPE)
+    # 3. 修正した辞書を使って認証する
+    creds = Credentials.from_service_account_info(creds_info, scopes=SCOPE)
     client = gspread.authorize(creds)
     return client
 
